@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   template: `
     <header class="header">
       <h1>RPG Character Builder</h1>
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Characters</a>
-        <a href="#">Classes</a>
-        <a href="#">About</a>
+        <a routerLink="/signin">Sign In</a>
+        <a routerLink="/players">Players</a>
+        <a routerLink="/create-character">Create Character</a>
+        <a routerLink="/create-guild">Create Guild</a>
+        <a routerLink="/character-faction">Faction</a>
       </nav>
     </header>
 
@@ -22,20 +23,17 @@ import { RouterOutlet } from '@angular/router';
 
     <footer class="footer">
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Characters</a>
-        <a href="#">Classes</a>
-        <a href="#">About</a>
+        <a routerLink="/signin">Sign In</a>
+        <a routerLink="/players">Players</a>
+        <a routerLink="/create-character">Create Character</a>
+        <a routerLink="/create-guild">Create Guild</a>
+        <a routerLink="/character-faction">Faction</a>
       </nav>
       <p>© 2026 RPG Character Builder</p>
     </footer>
   `,
   styles: [`
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&family=Cinzel&display=swap');
-
-    body {
-      margin: 0;
-    }
 
     .header {
       background: #1e1e2f;
