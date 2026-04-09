@@ -1,0 +1,14 @@
+<h2>Players</h2>
+
+<div class="grid">
+  @for (char of characters; track char.name) {
+    <div class="character-item">
+      <h3>{{ char.name }}</h3>
+      <p><strong>Gender:</strong> {{ char.gender }}</p>
+      <p><strong>Class:</strong> {{ char.class }}</p>
+      <p><strong>Faction:</strong> {{ char.faction }}</p>
+      <p><strong>Location:</strong> {{ char.startingLocation }}</p>
+      <p><em>{{ char.funFact }}</em></p>
+    </div>
+  }
+</div>

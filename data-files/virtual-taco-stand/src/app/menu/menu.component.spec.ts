@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MenuComponent } from './menu.component';
 
 describe('MenuComponent', () => {
@@ -8,16 +7,25 @@ describe('MenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuComponent]
-    })
-    .compileComponents();
+      imports: [MenuComponent] // ✅ correct for standalone
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
+  // Unit test 1
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  // Unit test 2
+  it('should correctly display a list of tacos', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const menuItems = compiled.querySelectorAll('.menu-item');
+
+    expect(menuItems.length).toEqual(component.menu.length);
   });
 });

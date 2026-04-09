@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, NgIf], // <-- add NgIf here
+  imports: [NgIf],
   template: `
     <div class="sign-in-container">
-      ...
-      <p class="sign-in-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <h1>Hello, {{ title }}</h1>
+
+      <p class="sign-in-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
     </div>
   `,
   styles: [`
@@ -17,5 +19,6 @@ import { NgIf } from '@angular/common';
   `]
 })
 export class AppComponent {
-  errorMessage: string = '';
+  title = 'virtual-taco-stand';
+  errorMessage = '';
 }
