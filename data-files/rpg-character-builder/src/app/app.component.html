@@ -1,5 +1,14 @@
 <nav class="navbar">
+
   <a routerLink="/players">Players</a>
+
+  <a routerLink="/signin" *ngIf="!isLoggedIn">Sign In</a>
+
+  <div *ngIf="isLoggedIn" class="auth-section">
+    <span>Welcome {{ userEmail }}</span>
+    <button (click)="signout()">Sign Out</button>
+  </div>
+
 </nav>
 
 <main class="main">
@@ -10,4 +19,5 @@
 
 <footer class="footer">
   <a routerLink="/players">Players</a>
+  <a routerLink="/signin">Sign In</a>
 </footer>
