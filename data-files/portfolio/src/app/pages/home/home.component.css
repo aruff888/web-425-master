@@ -1,0 +1,98 @@
+/* HERO SECTION */
+.hero {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.intro {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  font-size: 1.2rem;
+}
+
+/* BUTTONS */
+.cta-buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background: #ffffff;
+  color: #1e3c72;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ddd;
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid #fff;
+  color: white;
+}
+
+.btn.secondary:hover {
+  background: white;
+  color: #1e3c72;
+}
+
+/* BUCKET LIST */
+.bucket {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.bucket ul {
+  list-style: none;
+  padding: 0;
+}
+
+.bucket li {
+  background: #f4f4f4;
+  margin: 10px auto;
+  padding: 12px;
+  max-width: 500px;
+  border-radius: 6px;
+}
+
+/* CARDS */
+.quick-links {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #2a5298;
+  text-decoration: none;
+  font-weight: bold;
+}
