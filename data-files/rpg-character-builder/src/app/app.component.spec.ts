@@ -1,26 +1,28 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, RouterTestingModule]
+      declarations: [AppComponent],
+      providers: [
+        AuthService,
+        CookieService
+      ]
     }).compileComponents();
   });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    expect(fixture.componentInstance).toBeTruthy();
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
   });
 
-  it('should have correct route for PlayersComponent', () => {
+  it('should initialize isLoggedIn as false by default', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    const link = compiled.querySelector('a[href="/players"]');
-
-    expect(link).toBeTruthy();
+    const app = fixture.componentInstance;
+    expect(app.isLoggedIn).toBeFalse();
   });
 });

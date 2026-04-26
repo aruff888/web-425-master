@@ -1,23 +1,17 @@
-<nav class="navbar">
-
-  <a routerLink="/players">Players</a>
-
-  <a routerLink="/signin" *ngIf="!isLoggedIn">Sign In</a>
-
-  <div *ngIf="isLoggedIn" class="auth-section">
-    <span>Welcome {{ userEmail }}</span>
+<nav>
+  <div *ngIf="isLoggedIn; else loggedOut">
+    Welcome {{ email }}
     <button (click)="signout()">Sign Out</button>
   </div>
 
+  <ng-template #loggedOut>
+    <a routerLink="/signin">Sign In</a>
+  </ng-template>
 </nav>
 
-<main class="main">
-  <h1>RPG Character Builder</h1>
+<router-outlet></router-outlet>
 
-  <router-outlet></router-outlet>
-</main>
-
-<footer class="footer">
-  <a routerLink="/players">Players</a>
+<footer>
   <a routerLink="/signin">Sign In</a>
+  <a routerLink="/create-character">Create Character</a>
 </footer>

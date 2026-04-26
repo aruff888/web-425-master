@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  templateUrl: './signin.component.html'
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent {
 
-  signinForm!: FormGroup;
-  submitted = false;
+  errorMessage = '';
+
+  form = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$')]]
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -19,44 +22,14 @@ export class SigninComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.signinForm = this.fb.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d).+$')
-        ]
-      ]
-    });
-  }
+  onSubmit() {
+    const { email, password } = this.form.value;
 
-  get f() {
-    return this.signinForm.controls;
-  }
-
-  onSubmit(): void {
-    this.submitted = true;
-
-    if (this.signinForm.invalid) {
-      return;
-    }
-
-    const email = this.signinForm.value.email;
-    const password = this.signinForm.value.password;
-
-    if (this.authService.signin(email, password)) {
-      this.router.navigate(['/dashboard']); // or home page
+    if (this.authService.signin(email!, password!)) {
+      this.router.navigate(['/']);
     } else {
-      alert('Authentication failed. Please check your email and password.');
+      alert('Invalid email or password');
+      this.errorMessage = 'Authentication failed';
     }
   }
 }

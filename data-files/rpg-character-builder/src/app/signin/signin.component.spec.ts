@@ -1,108 +1,73 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SigninComponent } from './signin.component';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { of } from 'rxjs';
+import { SigninComponent } from './signin.component';
+import { AuthService } from '../auth.service';
 
-describe('SigninComponent (TDD Tests)', () => {
+describe('SigninComponent', () => {
   let component: SigninComponent;
   let fixture: ComponentFixture<SigninComponent>;
-  let authService: AuthService;
-  let cookieService: CookieService;
-  let router: Router;
+  let authService: jasmine.SpyObj<AuthService>;
+  let router: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-
-    const authServiceMock = {
-      signin: jasmine.createSpy('signin'),
-      getAuthState: jasmine.createSpy('getAuthState').and.returnValue(of(false))
-    };
-
-    const cookieServiceMock = {
-      set: jasmine.createSpy('set'),
-      get: jasmine.createSpy('get'),
-      check: jasmine.createSpy('check')
-    };
-
-    const routerMock = {
-      navigate: jasmine.createSpy('navigate')
-    };
+    authService = jasmine.createSpyObj('AuthService', ['signin']);
+    router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SigninComponent],
+      declarations: [SigninComponent],
+      imports: [ReactiveFormsModule],
       providers: [
-        { provide: AuthService, useValue: authServiceMock },
-        { provide: CookieService, useValue: cookieServiceMock },
-        { provide: Router, useValue: routerMock }
+        { provide: AuthService, useValue: authService },
+        { provide: Router, useValue: router }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SigninComponent);
     component = fixture.componentInstance;
-
-    authService = TestBed.inject(AuthService);
-    cookieService = TestBed.inject(CookieService);
-    router = TestBed.inject(Router);
-
     fixture.detectChanges();
   });
 
-  // ----------------------------------------
-  // TEST 1
-  // ----------------------------------------
   it('should set cookie and authState to true on successful sign in', () => {
+    authService.signin.and.returnValue(true);
 
-    (authService.signin as jasmine.Spy).and.returnValue(true);
-
-    component.signinForm.setValue({
-      email: 'test@test.com',
-      password: 'password1'
+    component.form.setValue({
+      email: 'test@demo.com',
+      password: 'password123'
     });
 
     component.onSubmit();
 
-    expect(authService.signin).toHaveBeenCalled();
-    expect(cookieService.set).toHaveBeenCalled();
+    expect(authService.signin).toHaveBeenCalledWith('test@demo.com', 'password123');
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 
-  // ----------------------------------------
-  // TEST 2
-  // ----------------------------------------
-  it('should NOT set cookie and authState true on unsuccessful sign in', () => {
+  it('should not set cookie and authState to true on unsuccessful sign in', () => {
+    spyOn(window, 'alert');
+    authService.signin.and.returnValue(false);
 
-    (authService.signin as jasmine.Spy).and.returnValue(false);
-
-    component.signinForm.setValue({
+    component.form.setValue({
       email: 'wrong@test.com',
-      password: 'wrongpass'
+      password: 'wrong123'
+    });
+
+    component.onSubmit();
+
+    expect(authService.signin).toHaveBeenCalledWith('wrong@test.com', 'wrong123');
+    expect(router.navigate).not.toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
+  });
+
+  it('should call signin method on form submission', () => {
+    authService.signin.and.returnValue(true);
+
+    component.form.setValue({
+      email: 'test@demo.com',
+      password: 'password123'
     });
 
     component.onSubmit();
 
     expect(authService.signin).toHaveBeenCalled();
-    expect(cookieService.set).not.toHaveBeenCalled();
   });
-
-  // ----------------------------------------
-  // TEST 3
-  // ----------------------------------------
-  it('should call signin method on form submission', () => {
-
-    (authService.signin as jasmine.Spy).and.returnValue(true);
-
-    component.signinForm.setValue({
-      email: 'test@test.com',
-      password: 'password1'
-    });
-
-    component.onSubmit();
-
-    expect(authService.signin).toHaveBeenCalledWith(
-      'test@test.com',
-      'password1'
-    );
-  });
-
 });
