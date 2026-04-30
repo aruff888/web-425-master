@@ -1,0 +1,49 @@
+<section class="guild-page">
+  <h2>Create Guild</h2>
+
+  <form [formGroup]="guildForm" (ngSubmit)="onSubmit()" class="guild-form">
+    <label>Guild Name</label>
+    <input type="text" formControlName="guildName">
+
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+
+    <label>Type</label>
+    <select formControlName="type">
+      <option value="">Select a type</option>
+      <option value="Competitive">Competitive</option>
+      <option value="Casual">Casual</option>
+      <option value="Social">Social</option>
+      <option value="Educational">Educational</option>
+    </select>
+
+    <div class="radio-group">
+      <p>Notification Preference</p>
+      <label><input type="radio" value="Email" formControlName="notificationPreference"> Email</label>
+      <label><input type="radio" value="SMS" formControlName="notificationPreference"> SMS</label>
+      <label><input type="radio" value="In-App" formControlName="notificationPreference"> In-App</label>
+    </div>
+
+    <label class="terms">
+      <input type="checkbox" formControlName="acceptTerms">
+      I accept the guild terms.
+    </label>
+
+    <button type="submit" [disabled]="guildForm.invalid">Create Guild</button>
+  </form>
+
+  <section class="guild-list">
+    <h3>Created Guilds</h3>
+
+    <div *ngIf="guilds.length === 0" class="empty-message">
+      No guilds created yet.
+    </div>
+
+    <div class="guild-card" *ngFor="let guild of guilds">
+      <h4>{{ guild.guildName }}</h4>
+      <p><strong>Description:</strong> {{ guild.description }}</p>
+      <p><strong>Type:</strong> {{ guild.type }}</p>
+      <p><strong>Notifications:</strong> {{ guild.notificationPreference }}</p>
+    </div>
+  </section>
+</section>

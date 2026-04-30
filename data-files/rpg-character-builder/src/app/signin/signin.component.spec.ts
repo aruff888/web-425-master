@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SigninComponent } from './signin.component';
 import { AuthService } from '../auth.service';
@@ -15,8 +14,9 @@ describe('SigninComponent', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [SigninComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        SigninComponent // ✅ standalone component goes in imports
+      ],
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: Router, useValue: router }
@@ -28,10 +28,11 @@ describe('SigninComponent', () => {
     fixture.detectChanges();
   });
 
+  // ✅ TEST 1
   it('should set cookie and authState to true on successful sign in', () => {
     authService.signin.and.returnValue(true);
 
-    component.form.setValue({
+    component.signinForm.setValue({
       email: 'test@demo.com',
       password: 'password123'
     });
@@ -39,14 +40,15 @@ describe('SigninComponent', () => {
     component.onSubmit();
 
     expect(authService.signin).toHaveBeenCalledWith('test@demo.com', 'password123');
-    expect(router.navigate).toHaveBeenCalledWith(['/']);
+    expect(router.navigate).toHaveBeenCalledWith(['/players']);
   });
 
+  // ❌ TEST 2
   it('should not set cookie and authState to true on unsuccessful sign in', () => {
     spyOn(window, 'alert');
     authService.signin.and.returnValue(false);
 
-    component.form.setValue({
+    component.signinForm.setValue({
       email: 'wrong@test.com',
       password: 'wrong123'
     });
@@ -58,10 +60,11 @@ describe('SigninComponent', () => {
     expect(window.alert).toHaveBeenCalled();
   });
 
+  // 🔁 TEST 3
   it('should call signin method on form submission', () => {
     authService.signin.and.returnValue(true);
 
-    component.form.setValue({
+    component.signinForm.setValue({
       email: 'test@demo.com',
       password: 'password123'
     });
