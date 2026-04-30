@@ -1,0 +1,59 @@
+.app-container {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: #f4f4f9;
+}
+
+.navbar {
+  background: #2c2f4a;
+  color: white;
+  padding: 20px;
+}
+
+.navbar h1 {
+  margin: 0 0 15px 0;
+}
+
+nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav a,
+.footer a {
+  color: white;
+  text-decoration: none;
+  background: #5b63d6;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+nav a:hover,
+.footer a:hover {
+  background: #434bb8;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.welcome {
+  font-weight: bold;
+}
+
+.content {
+  padding: 30px;
+}
+
+.footer {
+  background: #2c2f4a;
+  color: white;
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+}

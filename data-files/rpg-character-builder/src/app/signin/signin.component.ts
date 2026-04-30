@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signin',
-  templateUrl: './signin.component.html'
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-
-  errorMessage = '';
-
-  form = this.fb.group({
+  signinForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$')]]
+    password: ['', [Validators.required]]
   });
 
   constructor(
@@ -22,14 +23,14 @@ export class SigninComponent {
     private router: Router
   ) {}
 
-  onSubmit() {
-    const { email, password } = this.form.value;
+  onSubmit(): void {
+    const email = this.signinForm.value.email || '';
+    const password = this.signinForm.value.password || '';
 
-    if (this.authService.signin(email!, password!)) {
-      this.router.navigate(['/']);
+    if (this.authService.signin(email, password)) {
+      this.router.navigate(['/players']);
     } else {
-      alert('Invalid email or password');
-      this.errorMessage = 'Authentication failed';
+      alert('Invalid email or password.');
     }
   }
 }

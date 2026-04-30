@@ -1,17 +1,28 @@
-<nav>
-  <div *ngIf="isLoggedIn; else loggedOut">
-    Welcome {{ email }}
-    <button (click)="signout()">Sign Out</button>
-  </div>
+<div class="app-container">
+  <header class="navbar">
+    <h1>RPG Character Builder</h1>
 
-  <ng-template #loggedOut>
+    <nav>
+      <a routerLink="/signin">Sign In</a>
+      <a routerLink="/players">Players</a>
+      <a routerLink="/create-character">Create Character</a>
+
+      <span *ngIf="isLoggedIn" class="welcome">
+        Welcome {{ email }}
+      </span>
+
+      <button *ngIf="isLoggedIn" (click)="signout()">
+        Sign Out
+      </button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
     <a routerLink="/signin">Sign In</a>
-  </ng-template>
-</nav>
-
-<router-outlet></router-outlet>
-
-<footer>
-  <a routerLink="/signin">Sign In</a>
-  <a routerLink="/create-character">Create Character</a>
-</footer>
+    <a routerLink="/create-character">Create Character</a>
+  </footer>
+</div>
